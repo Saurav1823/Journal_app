@@ -1,10 +1,13 @@
 package net.engineeringdigest.journalApp.controller;
 
 import net.engineeringdigest.journalApp.entity.User;
+import net.engineeringdigest.journalApp.repository.UserRepository;
 import net.engineeringdigest.journalApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,30 +18,43 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserRepository userRepository;
+
+
     @GetMapping
     public List<User> getAllUsers(){
         System.out.println("Getting all users in controller");
         return userService.getAll();
     }
 
-    @PostMapping
-    public void createUser(@RequestBody User user){
-        System.out.println("Creating user in controller");
-        userService.saveEntry(user);
-    }
+//    @PostMapping
+//    public void createUser(@RequestBody User user){
+//        System.out.println("Creating user in controller");
+//        userService.saveEntry(user);
+//    }
 
-    @PutMapping("/{username}")
-    public ResponseEntity<?> updateUser(@RequestBody User user , @PathVariable String username){
-        // find existing user by username
-        User userInDb = userService.findByUsername(username);
+    @PutMapping
+    public ResponseEntity<?> updateUser(@RequestBody User user){
 
-        if(user.getPassword() != null){
-            userInDb.setUsername(user.getUsername());
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username = authentication.getName();
+
+            User userInDb = userService.findByUsername(username);
+            userInDb.setUserName(user.getUserName());
             userInDb.setPassword(user.getPassword());
             userService.saveEntry(userInDb);
-        }
+
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @DeleteMapping
+    public ResponseEntity<?> deleteUserById(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+         userRepository.deleteByUserName(authentication.getName());
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 
 }

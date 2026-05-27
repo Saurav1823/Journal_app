@@ -6,5 +6,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface UserRepository extends MongoRepository<User, ObjectId> {
     // Spring Data will create an implementation to find a user by the `username` field
-    User findByUsername(String userName);
+    User findByUserName(String username);
+    void deleteByUserName(String username);
 }

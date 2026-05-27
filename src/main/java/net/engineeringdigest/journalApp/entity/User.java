@@ -20,11 +20,12 @@ public class User {
 
     @Indexed(unique = true)
     @NonNull
-    @JsonAlias({"userName", "username"})
-    private String username;
+//    @JsonAlias({"userName", "username"})
+    private String userName;
     @NonNull
     private String password;
 
     @DBRef
     private List<JournalEntry> journalEntries = new ArrayList<>();
+    private List<String> roles;
 }
