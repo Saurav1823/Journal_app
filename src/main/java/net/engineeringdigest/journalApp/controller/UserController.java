@@ -43,11 +43,10 @@ public class UserController {
             User userInDb = userService.findByUsername(username);
             userInDb.setUserName(user.getUserName());
             userInDb.setPassword(user.getPassword());
-            userService.saveEntry(userInDb);
-
-
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            userService.saveNewUser(userInDb);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
 
     @DeleteMapping
     public ResponseEntity<?> deleteUserById(){
