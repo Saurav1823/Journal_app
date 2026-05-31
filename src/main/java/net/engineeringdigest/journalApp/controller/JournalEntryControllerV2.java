@@ -4,7 +4,6 @@ import net.engineeringdigest.journalApp.entity.JournalEntry;
 import net.engineeringdigest.journalApp.entity.User;
 import net.engineeringdigest.journalApp.service.JournalEntryService;
 import net.engineeringdigest.journalApp.service.UserService;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,7 +52,7 @@ public class JournalEntryControllerV2 {
 
 
     @GetMapping("/id/{myId}")
-    public ResponseEntity<JournalEntry> getJournalEntryById(@PathVariable ObjectId myId ){
+    public ResponseEntity<JournalEntry> getJournalEntryById(@PathVariable Long myId ){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
         User user = userService.findByUsername(userName);
@@ -68,7 +67,7 @@ public class JournalEntryControllerV2 {
     }
 
     @DeleteMapping("/id/{myId}")
-    public ResponseEntity<?> deleteJournalEntryById( @PathVariable ObjectId myId ){
+    public ResponseEntity<?> deleteJournalEntryById( @PathVariable Long myId ){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
             boolean removed = journalEntryService.deleteById(myId, userName);
@@ -82,7 +81,7 @@ public class JournalEntryControllerV2 {
     }
 
     @PutMapping("/id/{myId}")
-    public ResponseEntity<?>  updateJournalById(@PathVariable ObjectId myId , @RequestBody JournalEntry newEntry){
+    public ResponseEntity<?>  updateJournalById(@PathVariable Long myId , @RequestBody JournalEntry newEntry){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
         User user = userService.findByUsername(userName);

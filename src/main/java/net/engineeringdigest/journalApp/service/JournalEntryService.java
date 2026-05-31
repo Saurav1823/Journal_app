@@ -3,7 +3,6 @@ package net.engineeringdigest.journalApp.service;
 import net.engineeringdigest.journalApp.entity.JournalEntry;
 import net.engineeringdigest.journalApp.entity.User;
 import net.engineeringdigest.journalApp.repository.JournalEntryRepository;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,19 +42,19 @@ public class JournalEntryService {
        return journalEntryRepository.findAll();
    }
 
-   public Optional<JournalEntry> findById(ObjectId id){
+   public Optional<JournalEntry> findById(Long id){
        return journalEntryRepository.findById(id);
    }
 
 
    @Transactional
-   public boolean deleteById(ObjectId id, String userName){
+   public boolean deleteById(Long id, String userName){
         boolean removed = false;
        try{
            User user = userService.findByUsername(userName);
              removed =  user.getJournalEntries().removeIf(x-> x.getId().equals(id));
            if(removed){
-               userService.saveNewUser(user);
+               userService.saveUser(user);
                journalEntryRepository.deleteById(id);
            }
        }catch(Exception e){

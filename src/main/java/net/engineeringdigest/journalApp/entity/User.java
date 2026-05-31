@@ -1,31 +1,36 @@
 package net.engineeringdigest.journalApp.entity;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.Data;
 import lombok.NonNull;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.*;
 
+import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.ElementCollection;
+import javax.persistence.FetchType;
 
-@Document(collection = "users")
+@NoArgsConstructor
+@Entity
+@Table(name = "users")
 @Data
 public class User {
-    @Id
-    private ObjectId id;
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   private Long id;
 
-    @Indexed(unique = true)
+    @Column(unique = true)
     @NonNull
 //    @JsonAlias({"userName", "username"})
     private String userName;
     @NonNull
     private String password;
 
-    @DBRef
-    private List<JournalEntry> journalEntries = new ArrayList<>();
+   @OneToMany(cascade = CascadeType.ALL)
+   @JoinColumn(name = "user_id")
+   private List<JournalEntry> journalEntries = new ArrayList<>();
+
+
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles;
 }

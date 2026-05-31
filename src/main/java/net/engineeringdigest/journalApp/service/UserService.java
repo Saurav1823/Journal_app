@@ -5,7 +5,7 @@ import net.engineeringdigest.journalApp.entity.JournalEntry;
 import net.engineeringdigest.journalApp.entity.User;
 import net.engineeringdigest.journalApp.repository.JournalEntryRepository;
 import net.engineeringdigest.journalApp.repository.UserRepository;
-import org.bson.types.ObjectId;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,12 +61,12 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> findById(ObjectId id){
+    public Optional<User> findById(Long id){
 
         return userRepository.findById(id);
     }
 
-    public void deleteById(ObjectId id){
+    public void deleteById(Long id){
         userRepository.deleteById(id);
     }
 

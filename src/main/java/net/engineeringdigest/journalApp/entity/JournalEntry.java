@@ -3,19 +3,20 @@ package net.engineeringdigest.journalApp.entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.*;
+
 
 import java.time.LocalDateTime;
 
-@Document(collection = "journal_entries")
+@Entity
+@Table(name = "journal_entries")
 @Data
 @NoArgsConstructor
 public class JournalEntry {
 
     @Id
-    private ObjectId id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NonNull
     private String title;
