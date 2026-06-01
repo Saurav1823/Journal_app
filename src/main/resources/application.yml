@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/journaldb
+    username: postgres
+    password: Saurav@1823
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  main:
+    allow-circular-references: true
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+server:
+  port: 8080
+  servlet:
+    context-path: /journalApp
