@@ -1,0 +1,16 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://kssaurav1823:Saurav1823@cluster0.xvvhate.mongodb.net/journaldb?appName=Cluster0
+
+main:
+  allow-circular-references: true
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+server:
+  port: 8080
+  servlet:
+    context-path: /journalApp
